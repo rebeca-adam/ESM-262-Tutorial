@@ -1,0 +1,95 @@
+---
+title: "HW1 ESM 262"
+author: Rebeca Adam & Elijah Khan
+format: pdf
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(tinytex)
+library(janitor)
+```
+
+## Motivation Analysis 1: Relationship between NPP and transpiration
+
+We wanted to see if there was a relationship between net primary productivity (NPP) and transpiration. Transpiration has a large effect on global water budgets. With rising CO2 levels, we expect NPP to increase in many areas of the world, which is expected to have implications on transpiration levels.
+
+```{r}
+data_raw<- read.csv(here("Data", "p301.csv"))
+data_clean <- clean_names(data_raw)
+
+```
+
+## Linear Regression between NPP and transpiration
+
+```{r}
+lin_reg <- lm(transpiration ~ npp, data = data_clean)
+summary(lin_reg)
+```
+
+```{r}
+npp_vs_trans <- ggplot(data_clean, aes(x=npp, y=transpiration))+
+  geom_point()+
+  geom_smooth(method = lm, color='red')+
+  theme_bw()
+npp_vs_trans
+
+```
+
+## Results: Analysis 1
+
+We can see that transpiration is positively correlated with net primary productivity. For a 1 KgC/m2/day increase in net primary productivity, we expect a 0.264 m/m2/day increase in transpiration. This is expected, as more plant matter provides more routes for transpiration to occur. This slope estimate had a p-value of 2.2 x 10\^-16, meaning that it is statistically significant. The linear regression between NPP and transpiration has an R\^2 of 0.586, meaning that NPP explains 58.6% of the variance in transpiration. The model had an overall p-value of 2.2 x 10\^-16, meaning that it is statistically significant. NPP explains a sizable amount of variance, but there may be other factors contributing to changes in transpiration as well.
+
+## Motivation Analysis 2: Relationship between air temperature and transpiration
+
+The second part of this analysis will examine the relationship between air temperature and transpiration. The motivation is to better understand how atmospheric conditions, such as temperature, may influence ecosystem water loss. Transpiration is a key component of the ecosystem's water cycle, and we hypothesize that increasing air temperature is expected to affect active transpiration by increasing evaporation demand. We are testing whether warmer days are associated with greater transpiration, based on the USFS experimental watershed in the Southern California Sierra data set.
+
+```{r}
+
+p301 <- read.csv(here("Data", "p301.csv"))
+
+```
+
+Step 1: Creating a mean temperature variable. The USFS data includes the daily values of maximum temperature (tmax) and minimum temperature (tmin).
+
+```{r}
+p301_mean <- p301 |>
+  mutate(temp_mean = (tmax + tmin) / 2)
+
+p301_clean <- p301_mean |>
+  select(temp_mean, transpiration) |>
+  drop_na()
+```
+
+Step 2: Creating a scatterplot. To visualize the data trends.
+
+```{r}
+
+ggplot(p301_clean, aes(x = temp_mean, y = transpiration)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    title = "Transpiration vs Mean Daily Temperature",
+    x = "Mean Daily Temperature (°C)",
+    y = "Transpiration"
+  ) +
+  theme_minimal()
+```
+
+Step 3: Conducting a correlation and simple linear regression model.
+
+```{r}
+
+cor(p301_clean$temp_mean, p301_clean$transpiration)
+
+temp_model <- lm(transpiration ~ temp_mean, data = p301_clean)
+summary(temp_model)
+```
+
+## Results: Analysis 2
+
+The Analysis 2 results from the scatter plot, correlation, and linear regression show a moderately strong relationship between temperature and transpiration (r = 0.67). The linear regression model indicates that temperature is a statistically significant predictor for transpiration (p \> 2 x 10\^-16). The linear regression model explains that approximately 44.6% of the variance in the dependent variable is explained by the independent variable. This represents a moderate fit with a meaningful relation, which is also not highly predictive (R\^2 = 0.446).
+
+The scatter plot shows that transpiration remains low at low temperatures but becomes increasingly variable at high temperatures. This variability suggests that while temperature influences transpiration, there are other environmental factors that influence it. This could include variables such as water availability. Overall, the results indicate that air temperature appears to influence transpiration, but additional factors are needed to fully explain the variability.
