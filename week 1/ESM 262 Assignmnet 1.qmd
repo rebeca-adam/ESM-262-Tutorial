@@ -1,0 +1,19 @@
+---
+title: "ESM 262 Assignmnet 1"
+format: pdf
+editor: visual
+---
+
+## See how one predicts the other
+
+Temporal Trends (Time Series)
+
+If your data has time:
+Plot NPP and transpiration over time
+
+Need to pick 1:
+
+Look at seasonality (e.g., growing season peaks)
+Compute lag relationships (does transpiration lead NPP?)
+
+## Motivation
