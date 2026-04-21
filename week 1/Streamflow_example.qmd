@@ -1,0 +1,36 @@
+---
+title: "Streamflow Example"
+author: "Rebeca Adam"
+format: pdf
+editor: visual
+---
+
+```{r}
+library(here)
+library(tidyverse)
+
+# read in the data
+p301 <- read.csv(here("week 1", "p301.csv"))
+
+#aggregate by water year
+p301_yearly <- p301 |>
+  group_by(wy) |>
+  summarize(total_streamflow = sum(streamflow),
+            total_precip = sum(precip),
+            percent_streamflow = (total_streamflow/total_precip) * 100)
+
+#calc mean, range, and SD of percent streamflow accross the year
+mean(p301_yearly$percent_streamflow)
+range(p301_yearly$percent_streamflow)
+sd(p301_yearly$percent_streamflow)
+
+```
+
+
+
+
+
+
+
+
+
