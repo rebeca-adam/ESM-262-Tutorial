@@ -12,6 +12,8 @@ library(tinytex)
 library(janitor)
 ```
 
+helloooooooooooooo im in your homework!
+
 ## Motivation Analysis 1: Relationship between NPP and transpiration
 
 We wanted to see if there was a relationship between net primary productivity (NPP) and transpiration. Transpiration has a large effect on global water budgets. With rising CO2 levels, we expect NPP to increase in many areas of the world, which is expected to have implications on transpiration levels.
