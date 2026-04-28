@@ -26,18 +26,6 @@ sd(p301_yearly$percent_streamflow)
 
 ```
 
-to exit the terminal after doing "git revert HEAD" 1. hit : then type wq and hit enter
-
-<<<<<<< HEAD
-Change
-=======
-to exit the terminal after doing "git revert HEAD"
-1. hit : then type wq and hit enter
 
 
 
-
-
-
-
->>>>>>> 59667e36661db0a08b411f1528cd6cddd9c46fc7
